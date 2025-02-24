@@ -1,4 +1,4 @@
-**Plateforme de Tests d'Acceptation - YouCode **
+**Plateforme de Tests d'Acceptation - YouCode**
 
 ## Contexte du Projet
 Dans le cadre de l'optimisation du processus de recrutement et d'évaluation des candidats, ce projet vise à digitaliser et automatiser plusieurs étapes clés, depuis l'inscription jusqu'à l'organisation des tests présentiels.
