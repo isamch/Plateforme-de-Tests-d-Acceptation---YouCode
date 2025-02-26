@@ -15,7 +15,7 @@ class MigrateCustomOrder extends Command
      *
      * @var string
      */
-    protected $signature = 'migrate:youcode-order';
+    protected $signature = 'migrate:isam-order';
 
     /**
      * The console command description.
@@ -43,11 +43,9 @@ class MigrateCustomOrder extends Command
     {
         $paths = [
             // users and role
-            'database/migrations/2025_02_25_180110_create_roles_table.php',
-            'database/migrations/2025_02_25_203043_create_permissions_table.php',
+            'database/migrations/2025_02_26_115127_create_permission_tables.php',
 
             // table intermediat
-            'database/migrations/2025_02_25_203401_create_permission_role_table.php',
 
             'database/migrations/2014_10_12_000000_create_users_table.php',
             'database/migrations/2025_02_25_180140_create_candidats_table.php',
@@ -63,6 +61,9 @@ class MigrateCustomOrder extends Command
             'database/migrations/2025_02_25_173628_create_options_table.php',
             'database/migrations/2025_02_25_185259_create_candidat_quizzes_table.php',
             'database/migrations/2025_02_25_185748_create_candidat_options_table.php',
+
+
+
 
             'database/migrations/2014_10_12_100000_create_password_resets_table.php',
             'database/migrations/2019_08_19_000000_create_failed_jobs_table.php',

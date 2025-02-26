@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 
 use App\Models\Role;
+use App\Models\Permission;
 
 
 class RolePermissionSeeder extends Seeder
@@ -36,7 +37,7 @@ class RolePermissionSeeder extends Seeder
 
                 // for candidat:
                 'start_quiz',
-                'submit_quiz', //end
+                'submit_quiz', //end quiz
 
 
             // question:
@@ -47,18 +48,26 @@ class RolePermissionSeeder extends Seeder
                 'delete_questions',
 
 
-            // analytics:
-
-                'view_statistics', //view all statistic for
-                'view_results',
-                'delete_results',
-
-
         ];
+
+
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
+
+
+
 
 
 
         // set data in Role_Permission:
+        $admin->givePermissionTo([
+            'create_quizzes',
+            'view_quizzes',
+            'update_quizzes',
+            'delete_quizzes'
+        ]);
+
 
 
 
