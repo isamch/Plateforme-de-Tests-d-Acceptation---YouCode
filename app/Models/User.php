@@ -14,7 +14,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-
     protected $table = 'users';
 
 
@@ -60,10 +59,10 @@ class User extends Authenticatable
 
     // relationship:
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
+    // public function role()
+    // {
+    //     return $this->belongsTo(Role::class);
+    // }
 
     // who create this :
     public function quizzes()
