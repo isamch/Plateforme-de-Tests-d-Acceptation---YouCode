@@ -58,16 +58,33 @@ class RolePermissionSeeder extends Seeder
 
 
 
-
-
         // set data in Role_Permission:
         $admin->givePermissionTo([
             'create_quizzes',
             'view_quizzes',
             'update_quizzes',
-            'delete_quizzes'
+            'delete_quizzes',
+            'active_quiz',
+
+            'create_questions',
+            'view_questions',
+            'update_questions',
+            'delete_questions',
         ]);
 
+
+        $staff->givePermissionTo([
+            'create_questions',
+            'view_questions',
+            'update_questions',
+            'delete_questions',
+        ]);
+
+
+        $candidat->givePermissionTo([
+            'start_quiz',
+            'submit_quiz', //end quiz
+        ]);
 
 
 
