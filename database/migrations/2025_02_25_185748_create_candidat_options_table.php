@@ -17,7 +17,7 @@ class CreateCandidatOptionsTable extends Migration
             $table->id();
 
             $table->unsignedBigInteger('candidat_quiz_id');
-            $table->foreign('user_quiz_id')->references('id')->on('candidat_quizzes')->onDelete('cascade');
+            $table->foreign('candidat_quiz_id')->references('id')->on('candidat_quizzes')->onDelete('cascade');
 
             $table->unsignedBigInteger('option_id');
             $table->foreign('option_id')->references('id')->on('options')->onDelete('cascade');
