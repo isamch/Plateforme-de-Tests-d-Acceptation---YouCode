@@ -93,11 +93,10 @@
                     <!-- Profile Link with Circle Image -->
                     <li class="nav-item me-3">
                         <a class="nav-link d-flex align-items-center btn" href="#">
-                            <img src="{{ asset('storage/profiles_images/default/profile.jpeg') }}" alt="Profile"
+                            <img src="{{ asset('storage/' .  Auth::user()->photo ) }}" alt="Profile"
                                 class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                         </a>
                     </li>
-
                     <!-- Logout Button -->
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">

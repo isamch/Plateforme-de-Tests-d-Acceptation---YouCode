@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AdminQuizController extends Controller
+use App\Models\Quiz;
+use App\Models\Question;
+
+class QuizController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +17,8 @@ class AdminQuizController extends Controller
      */
     public function index()
     {
-        //
+        $quizzes = Quiz::all();
+        return view('admin.quizzes.index', compact('quizzes'));
     }
 
     /**
@@ -24,7 +28,9 @@ class AdminQuizController extends Controller
      */
     public function create()
     {
-        //
+        // $questions = Question::with('options')->get();
+        $questions = Question::all();
+        return view('admin.quizzes.create', compact('questions'));
     }
 
     /**

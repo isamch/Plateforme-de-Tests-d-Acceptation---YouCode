@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Admin\QuizController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +42,20 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
-// Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
-//     Route::resource('users', UserController::class);
-// });
+Route::middleware(['auth', 'hasRole:admin'])->prefix('admin')->group(function () {
+
+    Route::resource('quizzes', QuizController::class);
+
+    // ->names([
+    //     'index' => 'quizzes.list',
+    //     'create' => 'quizzes.new',
+    //     'store' => 'quizzes.save',
+    //     'show' => 'quizzes.view',
+    //     'edit' => 'quizzes.modify',
+    //     'update' => 'quizzes.update',
+    //     'destroy' => 'quizzes.remove',
+
+    // ]);
+    Route::resource('questions', QuizController::class);
+
+});
