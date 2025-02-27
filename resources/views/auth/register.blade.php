@@ -28,10 +28,44 @@
             font-size: 0.875em;
             margin-top: 0.25rem;
         }
+
+        .navbar {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">YouCode</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Login Link -->
+                    <li class="nav-item me-2">
+                        <a class="nav-link btn btn-outline-primary border rounded-pill px-3"
+                            href="{{ route('login.form') }}">
+                            Login
+                        </a>
+                    </li>
+                    <!-- Register Link -->
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-success border rounded-pill px-3"
+                            href="{{ route('register.form') }}">
+                            Register
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
 
     <div class="container">
         <div class="row justify-content-center">
@@ -68,7 +102,8 @@
                                 <div class="col-md-6">
                                     <label for="age" class="form-label">Age</label>
                                     <input type="number" class="form-control" id="age" name="age"
-                                        placeholder="age" value="{{ old('age') }}" required min="1" max="120">
+                                        placeholder="age" value="{{ old('age') }}" required min="1"
+                                        max="120">
                                     @error('age')
                                         <span class="error-message">{{ $message }}</span>
                                     @enderror
@@ -132,7 +167,8 @@
                                 @error('national_card_image')
                                     <span class="error-message">{{ $message }}</span>
                                 @enderror
-                                <small class="form-text text-muted">Upload an image of your national ID card (JPEG, PNG,
+                                <small class="form-text text-muted">Upload an image of your national ID card (JPEG,
+                                    PNG,
                                     etc.).</small>
                             </div>
 

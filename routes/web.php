@@ -23,30 +23,21 @@ Route::get('/', function () {
 
 
 Route::get('home', function () {
-    return view('welcome');
+    return view('index');
 })->middleware('auth');
 
 
 
 
-Route::get('login', function () {
-    echo 'login';
-
-    return;
-})->name('login');
-
-
 // auth :
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.form');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.form');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 
-Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-
+    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
+    Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+});
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
-Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
-
 
 
 // Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {

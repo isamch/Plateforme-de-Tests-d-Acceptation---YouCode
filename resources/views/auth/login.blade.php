@@ -23,14 +23,49 @@
         }
 
         .error-message {
-            color: #dc3545; /* Bootstrap's danger color */
+            color: #dc3545;
+            /* Bootstrap's danger color */
             font-size: 0.875em;
             margin-top: 0.25rem;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 
 <body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">YouCode</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Login Link -->
+                    <li class="nav-item me-2">
+                        <a class="nav-link btn btn-outline-primary border rounded-pill px-3"
+                            href="{{ route('login.form') }}">
+                            Login
+                        </a>
+                    </li>
+                    <!-- Register Link -->
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-success border rounded-pill px-3"
+                            href="{{ route('register.form') }}">
+                            Register
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
 
     <div class="container">
         <div class="row justify-content-center">
@@ -44,7 +79,8 @@
                             <!-- Email Field -->
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email address</label>
-                                <input name="email" type="email" class="form-control" id="email" placeholder="Enter email" value="{{ old('email') }}">
+                                <input name="email" type="email" class="form-control" id="email"
+                                    placeholder="Enter email" value="{{ old('email') }}">
                                 @error('email')
                                     <span class="error-message">{{ $message }}</span>
                                 @enderror
@@ -53,7 +89,8 @@
                             <!-- Password Field -->
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+                                <input name="password" type="password" class="form-control" id="password"
+                                    placeholder="Password">
                                 @error('password')
                                     <span class="error-message">{{ $message }}</span>
                                 @enderror

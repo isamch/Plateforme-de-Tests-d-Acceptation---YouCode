@@ -31,7 +31,7 @@ class RegisterRequest extends FormRequest
             'age' => 'required|integer|min:1|max:120',
             'address' => 'nullable|string|max:255',
 
-            'email' => 'bail|required|email',
+            'email' => 'bail|required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required',
 
