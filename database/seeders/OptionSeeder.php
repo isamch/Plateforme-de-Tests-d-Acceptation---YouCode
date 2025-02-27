@@ -170,6 +170,8 @@ class OptionSeeder extends Seeder
 
             foreach($optionArray as $singleKey => $singleOption) {
 
+                if ($singleKey == "correct") continue;
+
                 $is_ture = false;
 
                 if($optionArray["correct"] == $singleKey){
