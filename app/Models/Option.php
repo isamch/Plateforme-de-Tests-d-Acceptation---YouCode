@@ -24,6 +24,7 @@ class Option extends Model
     }
 
 
+
     public function candidatOption()
     {
         return $this->hasMany(CandidatOption::class);

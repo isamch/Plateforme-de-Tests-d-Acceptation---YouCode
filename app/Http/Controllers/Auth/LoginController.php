@@ -35,7 +35,7 @@ class LoginController extends Controller
             $user = Auth::user();
 
             if ($user->hasRole('admin')) {
-                return redirect()->intended('/admin/dashboard')->with('success', 'Welcome Admin!');
+                return redirect()->intended('/home')->with('success', 'Welcome Admin!');
             }
 
             if ($user->hasRole('staff')) {

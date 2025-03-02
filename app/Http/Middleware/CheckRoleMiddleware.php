@@ -6,8 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
-class hasRole
+class CheckRoleMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,9 +18,8 @@ class hasRole
     public function handle(Request $request, Closure $next, $role)
     {
 
-        if ( !Auth::check() || !Auth::user()->hasRole($role) ) {
-
-            return redirect('/')->with('errorMiddlewar', "you don't have authorization to view this page");
+        if (!Auth::check() && !Auth::user()->hasRole($role)) {
+            return redirect()->to('/login');
         }
 
         return $next($request);
