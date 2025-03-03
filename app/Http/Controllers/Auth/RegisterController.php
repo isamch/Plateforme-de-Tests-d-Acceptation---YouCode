@@ -3,67 +3,71 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Requests\RegisterRequest;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
-
-
+use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use App\Models\Candidat;
-
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Register Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles the registration of new users as well as their
+    | validation and creation. By default this controller uses a trait to
+    | provide this functionality without requiring any additional code.
+    |
+    */
 
+    use RegistersUsers;
 
-    public function showRegistrationForm()
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = RouteServiceProvider::HOME;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        return view('auth.register');
+        $this->middleware('guest');
     }
 
-
-    public function register(RegisterRequest $request)
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
     {
-
-        // image :
-
-        // profile :
-        if ($request->hasFile('profile_image')) {
-            $profileImage = $request->file('profile_image')->store('profiles_images/candidat', 'public');
-        } else {
-            $profileImage = 'profiles_images/default/profile.jpeg';
-        }
-
-        // card :
-         if ($request->hasFile('national_card_image')) {
-            $cardImage = $request->file('national_card_image')->store('card_images/candidat', 'public');
-        } else {
-            $cardImage = 'card_images/default/card1.png';
-        }
-
-
-        // insert for user :
-        $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'age' => $request->age,
-            'address' => $request->address,
-            'photo' => $profileImage,
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+    }
 
-        $user->assignRole('candidat');
-
-        $candidat = Candidat::create([
-            'user_id' => $user->id,
-            'card_path' => $cardImage,
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return \App\Models\User
+     */
+    protected function create(array $data)
+    {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
         ]);
-
-
-        return redirect()->to('/login')->with('success_register', 'account created successfully');
-
     }
 }

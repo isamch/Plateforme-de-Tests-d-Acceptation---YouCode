@@ -1,130 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Login') }}</div>
 
-        .login-container {
-            margin-top: 100px;
-        }
+                <div class="card-body">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
 
-        .login-card {
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+                        <div class="row mb-3">
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
-        .error-message {
-            color: #dc3545;
-            /* Bootstrap's danger color */
-            font-size: 0.875em;
-            margin-top: 0.25rem;
-        }
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-        .navbar {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="#">YouCode</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <!-- Login Link -->
-                    <li class="nav-item me-2">
-                        <a class="nav-link btn btn-outline-primary border rounded-pill px-3"
-                            href="{{ route('login.form') }}">
-                            Login
-                        </a>
-                    </li>
-                    <!-- Register Link -->
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-outline-success border rounded-pill px-3"
-                            href="{{ route('register.form') }}">
-                            Register
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4 login-container">
-                <div class="card login-card">
-                    <div class="card-body">
-                        <h3 class="card-title text-center">Login</h3>
-                        <form action="{{ route('login.post') }}" method="POST">
-                            @csrf
-
-                            <!-- Email Field -->
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input name="email" type="email" class="form-control" id="email"
-                                    placeholder="Enter email" value="{{ old('email') }}">
                                 @error('email')
-                                    <span class="error-message">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
+                        </div>
 
-                            <!-- Password Field -->
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input name="password" type="password" class="form-control" id="password"
-                                    placeholder="Password">
+                        <div class="row mb-3">
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
                                 @error('password')
-                                    <span class="error-message">{{ $message }}</span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
+                        </div>
 
-                            <!-- Submit Button -->
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                        <div class="row mb-3">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="remember">
+                                        {{ __('Remember Me') }}
+                                    </label>
+                                </div>
                             </div>
+                        </div>
 
-                            @error('login_error')
-                                <span class="error-message">{{ $message }}</span>
-                            @enderror
+                        <div class="row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Login') }}
+                                </button>
 
-                            <!-- Forgot Password Link -->
-                            <div class="text-center mt-3">
-                                <a href="#">Forgot password?</a>
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                @endif
                             </div>
-
-                            <!-- Link to Register Page -->
-                            <div class="text-center mt-3">
-                                <a href="{{ route('register.form') }}">Don't have an account? Register here</a>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-</body>
-
-</html>
+</div>
+@endsection

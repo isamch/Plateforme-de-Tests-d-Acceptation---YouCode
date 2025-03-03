@@ -17,7 +17,5 @@ class Role extends SpatieRole
 
 
 
-
-
 }
 
