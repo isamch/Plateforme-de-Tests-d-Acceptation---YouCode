@@ -27,6 +27,15 @@ use Illuminate\Support\Str;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
+Route::get('home', function () {
+    return view('index');
+})->middleware('auth', 'verify-email');
+
 
 
 // auth :
@@ -41,21 +50,19 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 
-Route::get('/', function () {
-    return view('welcome');
+
+// email verification :
+Route::middleware('CheckIfVerifyEmail')->group(function () {
+    Route::get('email/verifier', [VerificationController::class, 'index'])->name('verification.notice');
+    Route::get('email/verifier/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
+    Route::post('email/renvoyer', [VerificationController::class, 'send'])->name('verification.send');
 });
 
 
-Route::get('home', function () {
-    return view('index');
-})->middleware('auth', 'verify-email');
+// admin :
+Route::middleware('auth')->prefix('admin')->group(function () {
 
+    Route::resource('quizzes', QuizController::class);
+    Route::resource('questions', QuizController::class);
 
-
-
-Route::get('email/verifier', [VerificationController::class, 'index'])->name('verification.notice');
-Route::get('email/verifier/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
-Route::post('email/renvoyer', [VerificationController::class, 'send'])->name('verification.send');
-
-
-
+});

@@ -18,6 +18,7 @@ class CheckIfVerifyEmail
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
+
         if (!$user->email_verified_at) {
             return $next($request);
         }

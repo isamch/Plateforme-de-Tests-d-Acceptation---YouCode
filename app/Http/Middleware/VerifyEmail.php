@@ -24,6 +24,6 @@ class VerifyEmail
             return $next($request);
         }
 
-        return redirect()->route('verify.email');
+        return redirect()->route('verification.notice');
     }
 }

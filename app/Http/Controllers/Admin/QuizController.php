@@ -50,9 +50,9 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Quiz $quiz)
     {
-        //
+        return view('admin.quizzes.show', compact('quiz'));
     }
 
     /**
@@ -61,9 +61,10 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Quiz $quiz)
     {
-        //
+        $questions = Question::all();
+        return view('admin.quizzes.edit', compact('quiz', 'questions'));
     }
 
     /**
@@ -75,7 +76,18 @@ class QuizController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $quiz = Quiz::findOrFail($id);
+
+        dd($request);
+
+        $quiz->update([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        $quiz->questions()->sync($request->question_ids ?? []);
+
+        return $this->show($quiz)->with('success', 'Quiz updated successfully!');;
     }
 
     /**
