@@ -27,8 +27,8 @@
     <div class="container mt-5">
 
 
-
         <h2 class="mb-4 text-center">Quiz Details</h2>
+
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}

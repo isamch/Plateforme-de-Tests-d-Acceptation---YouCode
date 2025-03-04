@@ -32,22 +32,34 @@
                 </a>
             </div>
 
+
+
             <form action="{{ route('quizzes.update', $quiz->id) }}" method="POST">
                 @csrf
                 @method('PUT')
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <div class="row">
                     <!-- Left Side (Title & Description) -->
                     <div class="col-md-5">
                         <div class="mb-3">
                             <label for="title" class="form-label">Title:</label>
-                            <input type="text" name="title" class="form-control" value="{{ $quiz->title }}"
+                            <input type="text" name="title" class="form-control" value="{{ old('title', $quiz->title) }}" "
                                 required>
                         </div>
 
                         <div class="mb-3">
                             <label for="description" class="form-label">Description:</label>
-                            <textarea name="description" class="form-control" required>{{ $quiz->description }}</textarea>
+                            <textarea name="description" class="form-control" required>{{ old('description', $quiz->description) }}</textarea>
                         </div>
                     </div>
 
@@ -71,7 +83,7 @@
                                                 data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}">
                                                 <input type="checkbox" class="form-check-input me-2"
                                                     name="question_ids[]" value="{{ $question->id }}"
-                                                    {{ in_array($question->id, $quiz->questions->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                                    {{ in_array($question->id, old('question_ids', $quiz->questions->pluck('id')->toArray())) ? 'checked' : '' }}>
                                                 {{ $question->question }}
                                             </button>
                                         </h2>

@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\Quiz;
 use App\Models\Question;
 
+use App\Http\Requests\Quiz\UpdateRequest;
+use App\Http\Requests\Quiz\AddRequest;
+
 class QuizController extends Controller
 {
     /**
@@ -17,7 +20,7 @@ class QuizController extends Controller
      */
     public function index()
     {
-        $quizzes = Quiz::all();
+        $quizzes = Quiz::withTrashed()->orderBy('id', 'desc')->get();
         return view('admin.quizzes.index', compact('quizzes'));
     }
 
@@ -28,7 +31,6 @@ class QuizController extends Controller
      */
     public function create()
     {
-        // $questions = Question::with('options')->get();
         $questions = Question::all();
         return view('admin.quizzes.create', compact('questions'));
     }
@@ -39,9 +41,18 @@ class QuizController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddRequest $request)
     {
-        //
+        $quiz = Quiz::create([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        if ($request->has('question_ids')) {
+            $quiz->questions()->attach($request->question_ids);
+        }
+
+        return redirect()->route('quizzes.index')->with('success', 'Quiz created successfully!');
     }
 
     /**
@@ -74,20 +85,17 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $quiz = Quiz::findOrFail($id);
-
-        dd($request);
 
         $quiz->update([
             'title' => $request->title,
             'description' => $request->description,
         ]);
-
         $quiz->questions()->sync($request->question_ids ?? []);
 
-        return $this->show($quiz)->with('success', 'Quiz updated successfully!');;
+        return redirect()->route('quizzes.show', $quiz->id)->with('success', 'Quiz updated successfully!');
     }
 
     /**
@@ -96,8 +104,31 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Quiz $quiz)
     {
-        //
+        $quiz->delete();
+
+        // return redirect()->route('quizzes.index')->with('success', 'Quiz deleted successfully!');
+        return response()->json(['success' => 'Quiz restored successfully!']);
+
+    }
+
+    public function restore($id)
+    {
+        $quiz = Quiz::withTrashed()->findOrFail($id);
+        $quiz->restore();
+
+        // return redirect()->route('quizzes.index')->with('success', 'Quiz restored successfully!');
+        return response()->json(['success' => 'Quiz restored successfully!']);
+
+    }
+
+    // mine :
+    public function toggleStatus(Quiz $quiz)
+    {
+        $quiz->update([
+            'status' => $quiz->status === 'active' ? 'not_active' : 'active',
+        ]);
+        return redirect()->route('quizzes.index')->with('success', 'Quiz status updated successfully!');
     }
 }

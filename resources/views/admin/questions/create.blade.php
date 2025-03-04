@@ -51,6 +51,15 @@
     <div class="form-container">
         <h5 class="mb-3 text-center">Add New Question</h5>
 
+        @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
         <form action="{{ route('questions.store') }}" method="POST">
             @csrf
             <div class="mb-3">

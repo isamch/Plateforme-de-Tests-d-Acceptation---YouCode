@@ -62,7 +62,12 @@ Route::middleware('CheckIfVerifyEmail')->group(function () {
 // admin :
 Route::middleware('auth')->prefix('admin')->group(function () {
 
+    // quizzes:
     Route::resource('quizzes', QuizController::class);
-    Route::resource('questions', QuizController::class);
+    Route::post('/quizzes/toggle-status/{quiz}', [QuizController::class, 'toggleStatus'])->name('quizzes.toggleStatus');
+    Route::patch('/quizzes/restore/{id}', [QuizController::class, 'restore'])->name('quizzes.restore');
+
+    // questions:
+    Route::resource('questions', QuestionController::class);
 
 });
