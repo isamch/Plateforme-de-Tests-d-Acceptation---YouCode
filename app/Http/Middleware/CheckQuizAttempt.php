@@ -20,9 +20,9 @@ class CheckQuizAttempt
     {
 
         $candidatId = Auth::user()->candidat->id;
-        $quizAttempt  = CandidatQuiz::where('candidat_id', $candidatId)->latest()->firstOrFail();
+        $quizAttempt  = CandidatQuiz::where('candidat_id', $candidatId)->latest()->first();
 
-        if ($quizAttempt) {
+        if ($quizAttempt && $quizAttempt->status == 'completed') {
             return redirect()->route('verification.message')->with('message', 'You have already completed this quiz.');
         }
 

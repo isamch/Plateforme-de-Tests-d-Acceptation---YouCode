@@ -27,14 +27,19 @@ class QuizController extends Controller
 
         $quiz = Quiz::where('status', 'active')->firstOrFail();
 
-        CandidatQuiz::create([
+        // dd($quiz);
+        // dd($quiz->duration);
+        $candidatQuiz = CandidatQuiz::create([
             'score' => 0,
             'status' => 'in_progress',
             'candidat_id' => Auth::user()->candidat->id,
             'quiz_id' => $quiz->id,
+            'start_time' => now(),
         ]);
 
-        return view('candidat.quiz.start', compact('quiz'));
+        // return view('candidat.quiz.start', compact('quiz'));
+        return view('candidat.quiz.start', compact('quiz', 'candidatQuiz'));
+
     }
 
 
@@ -42,19 +47,21 @@ class QuizController extends Controller
     {
 
         $candidatQuiz = CandidatQuiz::where('candidat_id', Auth::user()->candidat->id)->latest()->firstOrFail();
-        $quiz = Quiz::find($candidatQuiz->quiz_id);
+        // $quiz = Quiz::find($candidatQuiz->quiz_id);
 
-        // duration :
-        $startTime = strtotime($candidatQuiz->start_time);
-        $currentTime = time();
-        $elapsedTime = ($currentTime - $startTime) / 60;
+        // // duration :
+        // $startTime = strtotime($candidatQuiz->start_time);
+        // $currentTime = time();
+        // $passedTime = ($currentTime - $startTime) / 60;
 
-        if ($elapsedTime >= $quiz->duration) {
-            return $this->forceSubmit($candidatQuiz);
-        }
+        // if ($passedTime >= $quiz->duration) {
+        //     return $this->forceSubmit($candidatQuiz);
+        // }
 
         $score = 0;
-        foreach ($request->answers as $index => $answer) {
+
+        $answers = $request->answers ?? [];
+        foreach ($answers as $index => $answer) {
             $question = Question::find($index);
             $is_ture = false;
             if ($question->options->where('is_true', true)->first()->id == $answer) {
@@ -80,6 +87,7 @@ class QuizController extends Controller
 
     private function forceSubmit($candidatQuiz)
     {
+        // dd($candidatQuiz->id);
         CandidatQuiz::where('id', $candidatQuiz->id)->update([
             'status' => 'completed',
             'end_time' => now(),

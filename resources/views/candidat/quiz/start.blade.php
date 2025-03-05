@@ -105,19 +105,45 @@
                         @foreach ($question->options as $option)
                             <label class="option">
                                 <input type="radio" name="answers[{{ $option->question_id }}]"
-                                    value="{{ $option->id }}" required>
+                                    value="{{ $option->id }}">
                                 {{ $option->option }}
                             </label>
                         @endforeach
                     </div>
                 @endforeach
 
-                <button type="submit" class="btn submit-btn">🚀 Submit Quiz</button>
+                <button id="autoSubmitForm" type="submit" class="btn submit-btn">🚀 Submit Quiz</button>
             </form>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        let intervalId =setInterval(function() {
+
+            let passedTime = (Math.floor(Date.now() / 1000) - {{ strtotime($candidatQuiz->start_time) }}) / 60;
+
+
+
+            let quizDuration = {{ $quiz->duration }};
+
+
+            if (passedTime >= quizDuration) {
+                let btnSubmit = document.getElementById("autoSubmitForm");
+                if (btnSubmit) {
+                    console.log("Submitting form automatically...");
+                    btnSubmit.click();
+                    clearInterval(intervalId);
+                } else {
+                    console.error("Element #autoSubmitForm not found!");
+                }
+            }
+        }, 1000);
+
+    </script>
+
 </body>
 
 </html>

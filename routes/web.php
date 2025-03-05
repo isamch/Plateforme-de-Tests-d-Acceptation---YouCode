@@ -83,6 +83,7 @@ Route::middleware('auth', 'CheckeRole:admin')->prefix('admin')->group(function (
 });
 
 
+
 // candidat pass quiz :
 Route::middleware('auth', 'CheckeRole:candidat', 'CheckQuizAttempt')->prefix('candidat')->group(function () {
 
