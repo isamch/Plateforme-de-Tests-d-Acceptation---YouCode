@@ -37,7 +37,7 @@ Route::get('/', function () {
 // for test :
 Route::get('adm', function () {
 
-    dd(Auth::user()->getRoleNames());
+    // dd(Auth::user()->getRoleNames());
 });
 
 
@@ -87,7 +87,7 @@ Route::middleware('auth', 'CheckeRole:admin')->prefix('admin')->group(function (
 Route::prefix('candidat')->group(function () {
 
     Route::get('quiz', [CandidatQuizController::class, 'index'])->name('candidat.quiz.index');
-    Route::get('quiz', [CandidatQuizController::class, 'start'])->name('candidat.quiz.start');
-    Route::get('quiz', [CandidatQuizController::class, 'end'])->name('candidat.quiz.end');
+    Route::get('quiz/take', [CandidatQuizController::class, 'start'])->name('candidat.quiz.start');
+    Route::post('quiz/submit', [CandidatQuizController::class, 'submit'])->name('candidat.quiz.submit');
 
 });
