@@ -23,11 +23,14 @@ class Question extends Model
     }
 
 
-
-
     public function options()
     {
         return $this->hasMany(Option::class);
     }
 
+
+    public function correctOption()
+    {
+        return $this->hasOne(Option::class)->where('is_true', true);
+    }
 }

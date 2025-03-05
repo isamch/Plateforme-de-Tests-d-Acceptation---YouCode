@@ -84,7 +84,7 @@ Route::middleware('auth', 'CheckeRole:admin')->prefix('admin')->group(function (
 
 
 // candidat pass quiz :
-Route::prefix('candidat')->group(function () {
+Route::middleware('auth', 'CheckeRole:candidat', 'CheckQuizAttempt')->prefix('candidat')->group(function () {
 
     Route::get('quiz', [CandidatQuizController::class, 'index'])->name('candidat.quiz.index');
     Route::get('quiz/take', [CandidatQuizController::class, 'start'])->name('candidat.quiz.start');

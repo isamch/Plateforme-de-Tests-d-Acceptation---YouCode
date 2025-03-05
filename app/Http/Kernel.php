@@ -66,6 +66,6 @@ class Kernel extends HttpKernel
         'verify-email' => \App\Http\Middleware\VerifyEmail::class,
         'CheckIfVerifyEmail' => \App\Http\Middleware\CheckIfVerifyEmail::class,
         'CheckeRole' => \App\Http\Middleware\CheckeRole::class,
-
+        'CheckQuizAttempt' => \App\Http\Middleware\CheckQuizAttempt::class,
     ];
 }
