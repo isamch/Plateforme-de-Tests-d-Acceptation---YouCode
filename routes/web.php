@@ -2,16 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-
-use App\Http\Controllers\Admin\QuizController;
-use App\Http\Controllers\Admin\QuestionController;
-use App\Http\Controllers\HomeController;
-use App\Models\Question;
-use Illuminate\Support\Facades\Auth;
-
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\QuizController as AdminQuizController;
+use App\Http\Controllers\Admin\QuestionController as AdminQuestionController;
+
+use App\Http\Controllers\Candidat\QuizController as CandidatQuizController;
+
 
 
 use Illuminate\Support\Str;
@@ -29,6 +29,15 @@ use Illuminate\Support\Str;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+
+
+// for test :
+Route::get('adm', function () {
+
+    dd(Auth::user()->getRoleNames());
 });
 
 
@@ -58,16 +67,27 @@ Route::middleware('CheckIfVerifyEmail')->group(function () {
     Route::post('email/renvoyer', [VerificationController::class, 'send'])->name('verification.send');
 });
 
+Route::get('email/message', [VerificationController::class, 'ShowMessage'])->name('verification.message');
+
 
 // admin :
-Route::middleware('auth')->prefix('admin')->group(function () {
+Route::middleware('auth', 'CheckeRole:admin')->prefix('admin')->group(function () {
 
     // quizzes:
-    Route::resource('quizzes', QuizController::class);
-    Route::post('/quizzes/toggle-status/{quiz}', [QuizController::class, 'toggleStatus'])->name('quizzes.toggleStatus');
-    Route::patch('/quizzes/restore/{id}', [QuizController::class, 'restore'])->name('quizzes.restore');
+    Route::resource('quizzes', AdminQuizController::class);
+    Route::post('/quizzes/toggle-status/{quiz}', [AdminQuizController::class, 'toggleStatus'])->name('quizzes.toggleStatus');
+    Route::patch('/quizzes/restore/{id}', [AdminQuizController::class, 'restore'])->name('quizzes.restore');
 
     // questions:
-    Route::resource('questions', QuestionController::class);
+    Route::resource('questions', AdminQuestionController::class);
+});
+
+
+// candidat pass quiz :
+Route::prefix('candidat')->group(function () {
+
+    Route::get('quiz', [CandidatQuizController::class, 'index'])->name('candidat.quiz.index');
+    Route::get('quiz', [CandidatQuizController::class, 'start'])->name('candidat.quiz.start');
+    Route::get('quiz', [CandidatQuizController::class, 'end'])->name('candidat.quiz.end');
 
 });

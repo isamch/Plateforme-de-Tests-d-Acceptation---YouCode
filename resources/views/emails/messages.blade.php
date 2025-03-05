@@ -22,7 +22,10 @@
     <div class="container">
         <div>
 
-            <h3>{{ $message ?? 'No message available.' }}</h3>
+            <h3>
+                {{ session('message') ?? 'No message available.' }}
+            </h3>
+
             <a href="{{ url('/home') }}" class="btn btn-primary mt-3">Go Home</a>
         </div>
     </div>

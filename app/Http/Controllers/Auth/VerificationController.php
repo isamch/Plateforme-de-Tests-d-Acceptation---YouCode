@@ -20,6 +20,12 @@ class VerificationController extends Controller
         return view('emails.verify');
     }
 
+    public function ShowMessage()
+    {
+        return view('emails.messages');
+    }
+
+
     public function verify($id, $token)
     {
 
@@ -34,16 +40,15 @@ class VerificationController extends Controller
         $user->verification_token = null;
         $user->save();
 
-        return redirect()->to('home')->with('success', 'Your email has been verified successfully.');
+        return redirect()->route('verification.message')->with('message', 'Your email has been verified successfully.');
     }
-
 
     public function send()
     {
         $user = Auth::user();
 
         if ($user->email_verified_at) {
-            return redirect()->to('home')->with('message', 'Your Account was activated');
+            return redirect()->route('verification.message')->with('message', 'your account is already activated');
         }
 
         $user->update([

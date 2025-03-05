@@ -93,7 +93,7 @@
                     <!-- Profile Link with Circle Image -->
                     <li class="nav-item me-3">
                         <a class="nav-link d-flex align-items-center btn" href="#">
-                            <img src="{{ asset('storage/' .  Auth::user()->photo ) }}" alt="Profile"
+                            <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Profile"
                                 class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                         </a>
                     </li>
@@ -118,7 +118,7 @@
             <h1>Welcome to YouCode Quizzes</h1>
             <p>Test your web development skills with our interactive quizzes and take your coding knowledge to the next
                 level!</p>
-            <a href="{{ route('register.form') }}" class="btn btn-light btn-lg">Get Started</a>
+            <a href="{{ Auth::user()->hasRole('candidat') ? route('candidat.quiz.index') : route('quizzes.index'); }}" class="btn btn-light btn-lg">Get Started</a>
         </div>
     </section>
 

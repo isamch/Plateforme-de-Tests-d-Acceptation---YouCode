@@ -56,7 +56,7 @@
 
         <form action="{{ route('verification.send') }}" method="POST">
             @csrf
-            <button type="submit" class="btn btn-primary btn-resend">Resend Verification Link</button>
+            <button type="submit" class="btn btn-primary btn-resend">Send Verification Link</button>
         </form>
     </div>
 

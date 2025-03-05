@@ -10,6 +10,7 @@ use App\Models\Question;
 
 use App\Http\Requests\Quiz\UpdateRequest;
 use App\Http\Requests\Quiz\AddRequest;
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
@@ -46,6 +47,7 @@ class QuizController extends Controller
         $quiz = Quiz::create([
             'title' => $request->title,
             'description' => $request->description,
+            'user_id' => Auth::user()->id,
         ]);
 
         if ($request->has('question_ids')) {
