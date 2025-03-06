@@ -26,6 +26,13 @@ class Candidat extends Model
         return $this->hasOne(CandidatQuiz::class);
     }
 
+    // testpresentiel
+    // public function TestPresentiels()
+    // {
+    //     return $this->belongsToMany(TestPresentiel::class, '');
+    // }
+
+
 
 
 }
