@@ -125,15 +125,12 @@
 
             let passedTime = (Math.floor(Date.now() / 1000) - {{ strtotime($candidatQuiz->start_time) }}) / 60;
 
-
-
             let quizDuration = {{ $quiz->duration }};
-
 
             if (passedTime >= quizDuration) {
                 let btnSubmit = document.getElementById("autoSubmitForm");
                 if (btnSubmit) {
-                    console.log("Submitting form automatically...");
+                    // console.log("Submitting form automatically...");
                     btnSubmit.click();
                     clearInterval(intervalId);
                 } else {

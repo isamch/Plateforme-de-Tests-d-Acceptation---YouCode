@@ -81,7 +81,7 @@ class QuizController extends Controller
             'score' => $score,
         ]);
 
-        return redirect()->route('verification.message')->with('message', 'You I passed the Quiz.');
+        return redirect()->route('verification.message')->with('message', 'You passed the Quiz.');
     }
 
 
