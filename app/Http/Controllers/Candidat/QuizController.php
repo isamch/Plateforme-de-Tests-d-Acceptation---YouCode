@@ -42,8 +42,6 @@ class QuizController extends Controller
             'start_time' => now(),
         ]);
 
-        dd($candidatQuiz->quiz->questions->count());
-
 
         // return view('candidat.quiz.start', compact('quiz'));
         return view('candidat.quiz.start', compact('quiz', 'candidatQuiz'));
@@ -83,10 +81,10 @@ class QuizController extends Controller
         $moyenne = ($score / $totalQuestions) * 20;
 
         if ($moyenne >= 10) {
-            return $this->scheduleTestPresentiel();
+            $this->scheduleTestPresentiel();
         }
 
-        return redirect()->route('verification.message')->with('message', 'You passed the Quiz.');
+        return redirect()->route('verification.message')->with('message', 'You passed the Quiz. Check Your Email');
     }
 
 
@@ -235,6 +233,6 @@ class QuizController extends Controller
         // send email:
         Mail::to($candidat->user->email)->send(new TestScheduledMail($candidat, $testDate));
 
-        return redirect()->route('verification.message')->with('message', 'Check Your Email');
+
     }
 }

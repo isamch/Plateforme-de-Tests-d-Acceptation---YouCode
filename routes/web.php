@@ -89,8 +89,4 @@ Route::middleware('auth', 'CheckeRole:candidat', 'CheckQuizAttempt')->prefix('ca
 
 
 
-// for test :
-Route::get('adm', [CandidatQuizController::class, 'scheduleTestPresentiel']);
-
-
 
