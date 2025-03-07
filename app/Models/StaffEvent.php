@@ -9,6 +9,8 @@ class StaffEvent extends Model
 {
     use HasFactory;
 
+    protected $table = 'staff_events';
+
     protected $fillable = ['title', 'start_time', 'end_time'];
 
 
@@ -19,8 +21,6 @@ class StaffEvent extends Model
     {
         return $this->belongsToMany(Staff::class, 'staff_staff_event');
     }
-
-
 
 
 }

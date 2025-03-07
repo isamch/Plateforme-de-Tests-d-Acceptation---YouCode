@@ -27,10 +27,10 @@ class Candidat extends Model
     }
 
     // testpresentiel
-    // public function TestPresentiels()
-    // {
-    //     return $this->belongsToMany(TestPresentiel::class, '');
-    // }
+    public function testPresentiel()
+    {
+        return $this->hasOne(TestPresentiel::class);
+    }
 
 
 

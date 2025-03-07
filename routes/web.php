@@ -34,16 +34,9 @@ Route::get('/', function () {
 
 
 
-// for test :
-Route::get('adm', function () {
-
-    // dd(Auth::user()->getRoleNames());
-});
-
-
 Route::get('home', function () {
     return view('index');
-})->middleware('auth', 'verify-email');
+})->middleware('auth', 'verify-email')->name('home');
 
 
 
@@ -92,3 +85,12 @@ Route::middleware('auth', 'CheckeRole:candidat', 'CheckQuizAttempt')->prefix('ca
     Route::post('quiz/submit', [CandidatQuizController::class, 'submit'])->name('candidat.quiz.submit');
 
 });
+
+
+
+
+// for test :
+Route::get('adm', [CandidatQuizController::class, 'scheduleTestPresentiel']);
+
+
+
