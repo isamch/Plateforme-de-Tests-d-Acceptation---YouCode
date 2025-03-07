@@ -26,6 +26,13 @@ class Candidat extends Model
         return $this->hasOne(CandidatQuiz::class);
     }
 
+    // testpresentiel
+    public function testPresentiel()
+    {
+        return $this->hasOne(TestPresentiel::class);
+    }
+
+
 
 
 }

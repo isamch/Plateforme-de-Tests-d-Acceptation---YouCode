@@ -24,4 +24,17 @@ class Staff extends Model
     }
 
 
+
+    // testpresentiel :
+    public function TestPresentiels()
+    {
+        return $this->hasMany(TestPresentiel::class);
+    }
+
+    public function staffEvents()
+    {
+        return $this->belongsToMany(StaffEvent::class, 'staff_staff_event');
+    }
+
+
 }

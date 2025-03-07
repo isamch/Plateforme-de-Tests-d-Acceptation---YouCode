@@ -26,7 +26,7 @@
             <div class="mb-3">
                 <h5>
                     <strong>Question:</strong>
-                    question title here!!!!
+                    {{ $question->question }}
                 </h5>
             </div>
 
@@ -34,24 +34,23 @@
             <ul class="list-group">
 
 
-                options here !!!!
-{{--
+
                 @foreach ($question->options as $option)
                     <li class="list-group-item {{ $option->is_true ? 'correct-answer' : '' }}">
                         {{ $option->option }}
                     </li>
-                @endforeach --}}
+                @endforeach
             </ul>
 
             <div class="mt-4">
-                {{-- <a href="{{ route('questions.index') }}" class="btn btn-secondary">Back to All Questions</a> --}}
-                {{-- <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-warning">Edit</a> --}}
-                {{-- <form action="{{ route('questions.destroy', $question->id) }}" method="POST" class="d-inline"> --}}
-                    {{-- @csrf --}}
-                    {{-- @method('DELETE') --}}
-                    {{-- <button type="submit" class="btn btn-danger" --}}
-                        {{-- onclick="return confirm('Are you sure?')">Delete</button> --}}
-                {{-- </form> --}}
+                <a href="{{ route('questions.index') }}" class="btn btn-secondary">Back to All Questions</a>
+                <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-warning">Edit</a>
+                <form action="{{ route('questions.destroy', $question->id) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
             </div>
         </div>
     </div>
