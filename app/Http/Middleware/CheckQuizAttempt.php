@@ -4,10 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-
+use App\Models\CandidatQuiz;
 use Illuminate\Support\Facades\Auth;
 
-class VerifyEmail
+class CheckQuizAttempt
 {
     /**
      * Handle an incoming request.
@@ -19,11 +19,13 @@ class VerifyEmail
     public function handle(Request $request, Closure $next)
     {
 
-        $user = Auth::user();
-        if ($user->email_verified_at) {
-            return $next($request);
+        $candidatId = Auth::user()->candidat->id;
+        $quizAttempt  = CandidatQuiz::where('candidat_id', $candidatId)->latest()->first();
+
+        if ($quizAttempt && $quizAttempt->status == 'completed') {
+            return redirect()->route('verification.message')->with('message', 'You have already completed this quiz.');
         }
 
-        return redirect()->route('verification.notice');
+        return $next($request);
     }
 }

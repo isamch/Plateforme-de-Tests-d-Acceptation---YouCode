@@ -32,9 +32,9 @@ class VerificationMail extends Mailable
     public function build()
     {
         return $this->subject('Verify Your Account')
-        ->view('emails.message-verify')
-        ->with([
-            'user' => $this->user
-        ]);
+            ->view('emails.message-verify')
+            ->with([
+                'user' => $this->user
+            ]);
     }
 }
